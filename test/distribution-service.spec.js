@@ -5,39 +5,15 @@ var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 
-class HttpClient {
-  put(url, payload) {
-  }
-}
+var fasten = require('../index.js');
 
-class DistributionService {
-  constructor(httpClient) {
-    this.httpClient = httpClient;
-  }
-
-  setRates(iterationId, rates) {
-    let result = rates.reduce((total, rate) => { return total + rate.rate}, 0);
-    if (result != 100) throw new IllegalRateException();
-    this.httpClient.put('/iteration/' + iterationId + '/rates', rates);
-    return {
-      id: iterationId,
-      rates: rates
-    }
-  }
-}
-
-class IllegalRateException {
-
-}
-
-
-describe('Share Distribution rates between parcitipants', () => {
+describe('distribute iteration money among participants', () => {
   const iteration = 14;
 
   var httpClient, distributionService;
   beforeEach(()=> {
-    httpClient = new HttpClient();
-    distributionService = new DistributionService(httpClient);
+    httpClient = new fasten.HttpClient();
+    distributionService = new fasten.DistributionService(httpClient);
   })
 
   it('sets distribution rates for an iteration', () => {
@@ -53,7 +29,7 @@ describe('Share Distribution rates between parcitipants', () => {
   it('Error when sum of distribution rates is not 100%', () => {
     const rates = [createRate('nestor', 10), createRate('gualis', 89)]
 
-    expect(() => {distributionService.setRates(iteration, rates)}).to.throw(IllegalRateException)
+    expect(() => {distributionService.setRates(iteration, rates)}).to.throw(fasten.IllegalRateException)
   });
 
   function createRate(who, rate) {

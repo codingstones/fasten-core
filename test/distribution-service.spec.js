@@ -15,10 +15,14 @@ class DistributionService {
     this.httpClient = httpClient;
   }
 
-  setRates(iteration, rates) {
+  setRates(iterationId, rates) {
     let result = rates.reduce((total, rate) => { return total + rate.rate}, 0);
     if (result != 100) throw new IllegalRateException();
-    this.httpClient.put('/iteration/' + iteration + '/rates', rates);
+    this.httpClient.put('/iteration/' + iterationId + '/rates', rates);
+    return {
+      id: iterationId,
+      rates: rates
+    }
   }
 }
 

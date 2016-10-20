@@ -2,6 +2,8 @@ var chai = require('chai');
 var expect = chai.expect;
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
+var sinonStubPromise = require('sinon-stub-promise');
+sinonStubPromise(sinon);
 chai.use(sinonChai);
 
 var fasten = require('../index.js');
@@ -9,25 +11,27 @@ var fasten = require('../index.js');
 describe('distribute iteration money among participants', () => {
   const iteration = 14;
 
-  var httpClient, distributionService;
+  const rates = [createRate('nestor', 10), createRate('gualis', 90)];
+
+  var httpClient, distributionService, stub;
   beforeEach(()=> {
     httpClient = new fasten.HttpClient();
     distributionService = new fasten.DistributionService(httpClient);
+
+    stub = sinon.stub(httpClient, 'put').returns({
+      then: function(resp){
+        return resp();
+      }
+    });
   })
 
   it('sets distribution rates for an iteration', () => {
-    var spy = sinon.spy(httpClient, 'put');
-
-    const rates = [createRate('nestor', 10), createRate('gualis', 90)];
-
     distributionService.setRates(iteration, rates);
 
-    expect(spy).calledWith('/iteration/14/rates', rates)
+    expect(stub).calledWith('/iteration/14/rates', rates)
   });
 
   it('returns an iteration with its rates settings set', () => {
-    const rates = [createRate('nestor', 10), createRate('gualis', 90)];
-
     return distributionService.setRates(iteration, rates).then((result) => {
       expect(result.id).to.be.equal(iteration);
 

@@ -20,7 +20,7 @@ describe('distribute iteration money among participants', () => {
 
     stub = sinon.stub(httpClient, 'put').returns({
       then: function(resp){
-        return resp();
+        return resp({body: JSON.stringify(rates)});
       }
     });
   })

@@ -2,7 +2,7 @@
   "name": "fasten-core",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/build.js",
   "es6": "src/index.js",
   "scripts": {
     "build": "mkdir -p dist && babel --presets es2015 -o dist/build.js ./src/*.js",

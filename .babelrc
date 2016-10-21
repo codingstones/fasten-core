@@ -1,5 +1,0 @@
-{
- "moduleId": "fasten-core",
- "presets": ["es2015"],
- "plugins": ["add-module-exports"]
-}

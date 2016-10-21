@@ -37,9 +37,17 @@ class Project {
   constructor(args) {
     this.name = args.name;
   }
+
+  slug() {
+    return this.name.toLowerCase()
+      .replace(/ /g,'-')
+      .replace(/[^\w-]+/g,'')
+    ;
+  }
 }
 
 class ProjectService {
+
   constructor(httpClient) {
     this._httpClient = httpClient;
     this._url = "https://fasten-backend.herokuapp.com/iterations"

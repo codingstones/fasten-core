@@ -6,7 +6,7 @@ var sinonStubPromise = require('sinon-stub-promise');
 sinonStubPromise(sinon);
 chai.use(sinonChai);
 
-var fasten = require('../index.js');
+var fasten = require('../src/index.js');
 
 describe('distribute iteration money among participants', () => {
   const iteration = 14;

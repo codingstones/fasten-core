@@ -5,7 +5,7 @@ var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 
-var fasten = require('../index.js');
+var fasten = require('../src/index.js');
 
 describe('integration test for money distribution', () => {
 

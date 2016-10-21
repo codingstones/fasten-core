@@ -1,9 +1,73 @@
 'use strict';
 
+var requests = require('superagent');
+
 class HttpClient {
+  post(url, payload) {
+    return new Promise((resolve, reject) => {
+      requests.post(url).send(payload).end((err, response) => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve(response);
+        }
+      });
+    });
+  }
+
+  get(url) {
+    return new Promise((resolve, reject) => {
+      requests.get(url).end((err, response) => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve(response);
+        }
+      });
+    });
+  }
+
   put(url, payload) {
   }
 }
+
+class Project {
+  constructor(args) {
+    this.name = args.name;
+  }
+}
+
+class ProjectService {
+  constructor(httpClient) {
+    this._httpClient = httpClient;
+    this._url = "https://fasten-backend.herokuapp.com/iterations"
+  }
+
+  create(name) {
+    return new Promise((resolve, reject) => {
+      this._httpClient.post(this._url, {name: name, type: 'project'}).then((response) => {
+        resolve(new Project(response.body));
+      });
+    });
+  }
+
+  allProjects() {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get(this._url).then((response) => {
+        let projects = response.body.filter((project) => {
+          return project.type == 'project'
+        });
+
+        resolve(projects.map((project) => {new Project(project)}));
+      });
+    });
+  }
+}
+
+const httpClient = new HttpClient();
+const projectService = new ProjectService(httpClient);
 
 class DistributionService {
   constructor(httpClient) {
@@ -29,4 +93,6 @@ class DistributionService {
 module.exports = {
   HttpClient: HttpClient,
   DistributionService: DistributionService,
+
+  ProjectService: projectService,
 }

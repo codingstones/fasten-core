@@ -60,7 +60,7 @@ class ProjectService {
           return project.type == 'project'
         });
 
-        resolve(projects.map((project) => {new Project(project)}));
+        resolve(projects.map((project) => {return new Project(project)}));
       });
     });
   }

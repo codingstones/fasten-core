@@ -5,23 +5,23 @@
   "main": "dist/build.js",
   "es6": "src/index.js",
   "scripts": {
-    "build": "mkdir -p dist && babel --presets es2015 --plugins add-module-exports,transform-es2015-modules-umd -o dist/build.js ./src/*.js",
+    "build": "webpack",
     "prepublish": "npm run build",
     "test": "mocha -C"
   },
   "author": "Coding Stones",
   "license": "ISC",
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-cli": "^6.16.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-es2015-modules-umd": "^6.12.0",
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0",
-    "sinon-stub-promise": "^3.0.1"
+    "sinon-stub-promise": "^3.0.1",
+    "webpack": "^1.13.2",
+    "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
     "superagent": "1.7.0"

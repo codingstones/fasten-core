@@ -47,14 +47,7 @@ class Project {
   constructor(args) {
     this.id = args.id;
     this.name = args.name;
-
-    //FIXME: This sould be in repository!
-    if (args.iterations) {
-      this.iterations = args.iterations.map((iteration) => {return new Iteration(iteration.total)});
-    }
-    else {
-      this.iterations = [];
-    }
+    this.iterations = [];
   }
 
   slug() {
@@ -95,7 +88,7 @@ class ProjectService {
   create(name) {
     return new Promise((resolve, reject) => {
       this._httpClient.post(this._url, {name: name, type: 'project'}).then((response) => {
-        resolve(new Project(response.body));
+        resolve(this._deserialize(response));
       });
     });
   }
@@ -104,8 +97,8 @@ class ProjectService {
     const url = this._url + '/' + project.id;
 
     return new Promise((resolve, reject) => {
-      this._httpClient.put(url, this._as_payload(project)).then((response) => {
-        resolve(new Project(response.body));
+      this._httpClient.put(url, this._serialize(project)).then((response) => {
+        resolve(this._deserialize(response));
       });
     });
   }
@@ -125,12 +118,12 @@ class ProjectService {
   findById(id) {
     return new Promise((resolve, reject) => {
       this._httpClient.get(this._url + '/' + id).then((response) => {
-        resolve(new Project(response.body));
+        resolve(this._deserialize(response));
       });
     });
   }
 
-  _as_payload(project) {
+  _serialize(project) {
     return {
       name: project.name,
       type: 'project',
@@ -140,6 +133,20 @@ class ProjectService {
         };
       }),
     };
+  }
+
+  _deserialize(response) {
+    let body = response.body;
+
+    let project = new Project(body);
+    if (body.iterations) {
+      body.iterations.forEach((iteration) => {
+        console.log(iteration);
+        project.addIteration(iteration.total);
+      });
+    }
+
+    return project;
   }
 }
 

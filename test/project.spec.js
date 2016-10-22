@@ -13,15 +13,6 @@ describe('Project', () => {
     project = new fasten.Project({name: aName});
   });
 
-  describe('when creating a new project', () => {
-    it('adds iterations', () => {
-      project = new fasten.Project({name: aName, iterations: [{total: 10000}, {total: 7200}]});
-
-      expect(project.iterations[0].total()).to.be.equal(10000);
-      expect(project.iterations[1].total()).to.be.equal(7200);
-    });
-  });
-
   describe('when creating a new iteration', () => {
     it('calculates total money from an iteration', () => {
       const iteration = project.addIteration(amount);

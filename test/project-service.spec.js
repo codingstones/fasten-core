@@ -10,7 +10,7 @@ describe('Project service', () => {
     projectService = fasten.ProjectService;
   })
 
-  it('creates a new service', () => {
+  xit('creates a new service', () => {
     const name = 'Conecta Foo';
 
     return projectService.create(name).then((project) => {

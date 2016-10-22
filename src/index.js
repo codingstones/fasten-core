@@ -47,6 +47,7 @@ class Project {
   constructor(args) {
     this.id = args.id;
     this.name = args.name;
+    this.iterations = [];
   }
 
   slug() {
@@ -54,6 +55,26 @@ class Project {
       .replace(/ /g,'-')
       .replace(/[^\w-]+/g,'')
     ;
+  }
+
+  addIteration(amount) {
+    let iteration = new Iteration(amount);
+    this.iterations.push(iteration);
+    return iteration;
+  }
+}
+
+class Iteration {
+  constructor(total) {
+    this._total = total
+  }
+
+  total() {
+    return this._total;
+  }
+
+  invoiced() {
+    return this.total() * 0.8;
   }
 }
 

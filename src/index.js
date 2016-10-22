@@ -95,7 +95,7 @@ class ProjectService {
 
   constructor(httpClient) {
     this._httpClient = httpClient;
-    this._url = "https://fasten-backend.herokuapp.com/iterations"
+    this._url = "https://fasten-backend.herokuapp.com/projects"
   }
 
   create(name) {

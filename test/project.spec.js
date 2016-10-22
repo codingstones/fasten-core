@@ -3,7 +3,7 @@ var expect = chai.expect;
 
 var fasten = require('../src/index.js');
 
-describe.only('Project', () => {
+describe('Project', () => {
   const aName = 'irrelevant name';
   const amount = 10000;
 

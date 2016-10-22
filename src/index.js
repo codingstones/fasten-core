@@ -115,10 +115,23 @@ class ProjectService {
     });
   }
 
+  findById(id) {
+    return new Promise((resolve, reject) => {
+      this._httpClient.get(this._url + '/' + id).then((response) => {
+        resolve(new Project(response.body));
+      });
+    });
+  }
+
   _as_payload(project) {
     return {
       name: project.name,
-      type: 'project'
+      type: 'project',
+      iterations: project.iterations.map((iteration) => {
+        return {
+          total: iteration.total,
+        };
+      }),
     };
   }
 }

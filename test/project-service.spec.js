@@ -32,4 +32,15 @@ describe('Project service', () => {
       expect(project.name).to.be.equal(newName);
     });
   });
+
+  it('finds a project using its id', () => {
+    let id = 12;
+    let name = "Conecta - Stones";
+
+    return projectService.findById(id).then((project) => {
+      expect(project.name).to.be.equal(name);
+
+      expect(project.iterations).to.have.length(0);
+    });
+  });
 });

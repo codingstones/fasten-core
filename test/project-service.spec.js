@@ -23,4 +23,13 @@ describe('Project service', () => {
       expect(projects).to.have.length.above(1);
     });
   });
+
+  it('updates a project', () => {
+    let newName = "Conecta - Stones";
+    let project = new fasten.Project({id: 12, name: newName});
+
+    return projectService.update(project).then((project) => {
+      expect(project.name).to.be.equal(newName);
+    });
+  });
 });

@@ -30,6 +30,16 @@ class HttpClient {
   }
 
   put(url, payload) {
+    return new Promise((resolve, reject) => {
+      requests.put(url).send(payload).end((err, response) => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve(response);
+        }
+      });
+    });
   }
 }
 
@@ -62,6 +72,16 @@ class ProjectService {
     });
   }
 
+  update(project) {
+    const url = this._url + '/' + project.id;
+
+    return new Promise((resolve, reject) => {
+      this._httpClient.put(url, this._as_payload(project)).then((response) => {
+        resolve(new Project(response.body));
+      });
+    });
+  }
+
   allProjects() {
     return new Promise((resolve, reject) => {
       this._httpClient.get(this._url).then((response) => {
@@ -72,6 +92,13 @@ class ProjectService {
         resolve(projects.map((project) => {return new Project(project)}));
       });
     });
+  }
+
+  _as_payload(project) {
+    return {
+      name: project.name,
+      type: 'project'
+    };
   }
 }
 
@@ -103,5 +130,9 @@ module.exports = {
   HttpClient: HttpClient,
   DistributionService: DistributionService,
 
+  // Classes
+  Project: Project,
+
+  // Instances
   ProjectService: projectService,
 }

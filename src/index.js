@@ -47,7 +47,14 @@ class Project {
   constructor(args) {
     this.id = args.id;
     this.name = args.name;
-    this.iterations = [];
+
+    //FIXME: This sould be in repository!
+    if (args.iterations) {
+      this.iterations = args.iterations.map((iteration) => {return new Iteration(iteration.total)});
+    }
+    else {
+      this.iterations = [];
+    }
   }
 
   slug() {

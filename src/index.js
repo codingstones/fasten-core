@@ -65,8 +65,9 @@ class Project {
 }
 
 class Iteration {
-  constructor(total) {
-    this._total = total
+  constructor(args) {
+    this._total = args.total;
+    this._forCommon = args.forCommon || 0.0;
   }
 
   total() {
@@ -75,6 +76,14 @@ class Iteration {
 
   invoiced() {
     return this.total() * 0.8;
+  }
+
+  forCommon() {
+    return this._forCommon;
+  }
+
+  toDistribute() {
+    return this.invoiced() - this.forCommon();
   }
 }
 
@@ -129,7 +138,8 @@ class ProjectService {
       type: 'project',
       iterations: project.iterations.map((iteration) => {
         return {
-          total: iteration.total,
+          total: iteration.total(),
+          forCommon: iteration.forCommon(),
         };
       }),
     };
@@ -141,8 +151,7 @@ class ProjectService {
     let project = new Project(body);
     if (body.iterations) {
       body.iterations.forEach((iteration) => {
-        console.log(iteration);
-        project.addIteration(iteration.total);
+        project.addIteration({total: iteration.total, forCommon: iteration.forCommon});
       });
     }
 

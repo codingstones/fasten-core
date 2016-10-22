@@ -1,3 +1,5 @@
+var nodeExternals = require('webpack-node-externals');
+
 module.exports = {
   entry: "./src/index.js",
   output: {
@@ -6,9 +8,7 @@ module.exports = {
     library: "fasten-core",
     libraryTarget: "umd"
   },
-  externals: [
-    {"superagent": "superagent"}
-  ],
+  externals: [nodeExternals()],
   module: {
     loaders: [
       {

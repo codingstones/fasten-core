@@ -82,6 +82,10 @@ class Iteration {
     return this._forCommon;
   }
 
+  forCommonAsPercentage() {
+    return (this._forCommon / this.invoiced()) * 100;
+  }
+
   toDistribute() {
     return this.invoiced() - this.forCommon();
   }

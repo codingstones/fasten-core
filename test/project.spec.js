@@ -24,6 +24,10 @@ describe('Project', () => {
       expect(iteration.forCommon()).to.be.equal(forCommon);
     });
 
+    it('calculates percentag apported to common', () => {
+      expect(iteration.forCommonAsPercentage()).to.be.equal(2.5);
+    });
+
     it('calculates money invoiced', () => {
       expect(iteration.invoiced()).to.be.equal(8000);
     });

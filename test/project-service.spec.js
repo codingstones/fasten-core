@@ -10,7 +10,7 @@ describe('Project service', () => {
     projectService = fasten.ProjectService;
   })
 
-  xit('creates a new service', () => {
+  xit('creates a new project', () => {
     const name = 'Conecta Foo';
 
     return projectService.create(name).then((project) => {
@@ -18,7 +18,7 @@ describe('Project service', () => {
     });
   });
 
-  it('retrieves all services', () => {
+  it('retrieves all projects', () => {
     return projectService.allProjects().then((projects) => {
       expect(projects).to.have.length.above(1);
     });
